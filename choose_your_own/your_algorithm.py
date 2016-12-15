@@ -24,21 +24,43 @@ plt.scatter(grade_slow, bumpy_slow, color = "r", label="slow")
 plt.legend()
 plt.xlabel("bumpiness")
 plt.ylabel("grade")
-plt.show()
+# plt.show()
 ################################################################################
 
 
 ### your code here!  name your classifier object clf if you want the 
 ### visualization code (prettyPicture) to show you the decision boundary
 
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier
+from time import time
+
+clf = KNeighborsClassifier(n_neighbors=100)
+adaclf = AdaBoostClassifier( n_estimators=80 )
+randclf = RandomForestClassifier()
+t0 = time()
+clf.fit(features_train, labels_train)
+print "fitting time: ", round(time() - t0, 3)
+t1= time()
+print clf.score(features_test, labels_test)
+print "predicting and accuracy time:", round(time() - t1 , 3)
+
+adaclf.fit(features_train, labels_train)
+print "fitting time: ", round(time() - t0, 3)
+t1= time()
+print adaclf.score(features_test, labels_test)
+print "predicting and accuracy time:", round(time() - t1 , 3)
 
 
-
-
+randclf.fit(features_train, labels_train)
+print "fitting time: ", round(time() - t0, 3)
+t1= time()
+print randclf.score(features_test, labels_test)
+print "predicting and accuracy time:", round(time() - t1 , 3)
 
 
 
 try:
-    prettyPicture(clf, features_test, labels_test)
+    prettyPicture(adaclf, features_test, labels_test)
 except NameError:
     pass
